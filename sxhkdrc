@@ -1,0 +1,26 @@
+super + 1
+	xterm
+
+super + 2
+	firefox
+
+super + 3
+	spotify
+
+super + 4
+	thunar
+
+super + space
+	dmenu_run -fn Nu -p ">_ " -nb '#2f343f' -sb '#dee5ef' -sf '#2f343f' -q
+
+super + w
+	killw $(pfw)
+
+{F11,F12}
+	amixer set Master 5{-,+}
+
+{F8,F9,F10}
+	playerctl {previous,next,play-pause}
+
+{F1,F2}
+	xbacklight {-dec 10,-inc 10}
