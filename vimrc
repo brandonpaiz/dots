@@ -8,25 +8,28 @@ set autoindent
 set tabstop=4
 set shiftwidth=4
 set smartindent
+set nowrap
 
-inoremap def<TAB> #ifndef<Esc>o#define<Esc>o<ENTER>#endif
-
-" jj to escape insert mode
+" jj or kk to escape insert mode
 inoremap jj <ESC>
+inoremap kk <ESC>
 
 " G now centers last line
 nnoremap G Gzz
 
+" ;; for ::
+inoremap ;; ::
+
 " Auto-close curly brackets
 inoremap {<ENTER> {<CR>}<Esc>ko
 
-" Save by CTRL-W
-nnoremap <C-W> :w<ENTER>
-inoremap <C-W> <Esc>:w<ENTER>i
+" Save with CTRL-E
+nnoremap <C-E> :w<ENTER>
+inoremap <C-E> <Esc>:w<ENTER>i
 
-" Quit by CTRL-E
-nnoremap <C-E> :q<ENTER>
-inoremap <C-E> <Esc>:q<ENTER>
+" Quit with CTRL-W
+nnoremap <C-W> :q<ENTER>
+inoremap <C-W> <Esc>:q<ENTER>
 
 " Tab Autocomplete
 function! Tab_Or_Complete()
@@ -37,3 +40,18 @@ function! Tab_Or_Complete()
   endif
 endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+
+" highlight matching under cursor
+":autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+
+" header guard snippet
+imap def<TAB> #ifndef<ENTER>#define<ENTER><ENTER>#endif<UP><ENTER><ENTER><ESC>4<UP>A<SPACE>
+
+" class snippet
+imap class<TAB> class{<ENTER><ESC>jA;<ESC>2kA<LEFT><SPACE>
+
+" struct snippet
+imap struct<TAB> struct{<ENTER><ESC>jA;<ESC>2kA<LEFT><SPACE>
+
+" main snippet
+imap main<TAB> int main(){<ENTER><ENTER><ENTER>return 0;<UP><UP><TAB>
