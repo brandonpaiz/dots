@@ -55,3 +55,15 @@ imap struct<TAB> struct{<ENTER><ESC>jA;<ESC>2kA<LEFT><SPACE>
 
 " main snippet
 imap main<TAB> int main(){<ENTER><ENTER><ENTER>return 0;<UP><UP><TAB>
+
+" Easily move lines up or down with control j/k
+nnoremap <C-j> :m .+1<CR>
+nnoremap <C-k> :m .-2<CR>
+inoremap <C-j> <Esc>:m .+1<CR>gi
+inoremap <C-k> <Esc>:m .-2<CR>gi
+
+" Move between tabs with ctrl 1/2
+nnoremap <C-1> gT
+nnoremap <C-2> gt
+inoremap <C-1> <ESC>gTgi
+inoremap <C-2> <ESC>gtgi
