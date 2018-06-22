@@ -1,8 +1,17 @@
-set number
-set linebreak
-set showmatch
-set mouse=a
-set splitright
+set number                          " line numbers
+set linebreak                       " visually wrap lines a bit nicer...
+set nowrap                          " ...not that I usually wrap
+set mouse=a                         " forgive me
+set splitright                      " split to the right by default
+set updatetime=250                  " git gutter update time
+set incsearch                       " search before pressing enter
+set scrolloff=3                     " keep 3 lines when scrolling
+
+set autoindent
+set tabstop=4
+set shiftwidth=4
+set smartindent
+set noruler                         " eh, never really need it
 
 syntax on
 hi VertSplit cterm=NONE
@@ -17,15 +26,14 @@ hi Directory ctermfg=BLUE
 hi String ctermfg=2
 hi LineNr ctermfg=8
 
-set autoindent
-set tabstop=4
-set shiftwidth=4
-set smartindent
-set nowrap
 
 " jj or kk to escape insert mode
 inoremap jj <ESC>
 inoremap kk <ESC>
+
+" visual hjkl
+nnoremap j gj
+nnoremap k gk
 
 " G now centers last line
 nnoremap G Gzz
@@ -116,3 +124,9 @@ nnoremap <C-D> <C-W>\|
 
 inoremap log<TAB> console.log();<LEFT><LEFT>
 
+inoremap <C-A> <ESC>A
+inoremap <C-O> <ESC>o
+
+" set foldmethod=marker   " was good for latex tho
+" set foldmethod=indent   " remove when interview is done
+" set foldnestmax=1
