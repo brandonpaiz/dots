@@ -9,12 +9,22 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #44000000
-background-alt = #444
+;background = #00000000
+;background = #44000000
+;background-alt = #444
+
+background = #00000000
+background-alt = #00000000
+
 ;foreground = ${xrdb:color7:#222}
-;foreground = #dfdfdf
+;foreground = #000
+;foreground-alt = #000
+;foreground = #fff
+;foreground-alt = #fff
 foreground = #9ab9c0
-foreground-alt = #555
+foreground-alt = #9ab9c0
+
+
 ;primary = #ffb52a
 primary = #00ffb52a
 secondary = #e60053
@@ -46,13 +56,16 @@ module-margin-right = 2
 
 ;font-0 = fixed:pixelsize=10;1
 font-0 = creep:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=10:antialias=false;0
+font-2 = WunconSiji:pixelsize=10;3
+font-3 = FontAwesome5Free:pixelsize=11;4
+font-4 = FontAwesome5Free:pixelsize=11:style=solid;4
+font-5 = FontAwesome5Brands:pixelsize=11;4
 
 modules-left = bspwm
 modules-center = date
 ;modules-right = xbacklight volume wlan eth battery date powermenu
-modules-right = wlan eth battery powermenu
+modules-right = wlan eth battery
 
 tray-position = right
 tray-padding = 2
@@ -100,19 +113,22 @@ label-unmounted-foreground = ${colors.foreground-alt}
 [module/bspwm]
 type = internal/bspwm
 
-label-focused = %index%
-label-focused-background = ${colors.background-alt}
+;label-focused = %index%
+label-focused = 
+;label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 4
 
-label-occupied = %index%
+;label-occupied = %index%
+label-occupied = 
 label-occupied-padding = 4
 
 label-urgent = %index%!
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 4
 
-label-empty = %index%
+;label-empty = %index%
+label-empty = 
 label-empty-foreground = ${colors.foreground-alt}
 label-empty-padding = 4
 
@@ -217,11 +233,17 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
+;ramp-signal-0 = 
+;ramp-signal-1 = 
+;ramp-signal-2 = 
+;ramp-signal-3 = 
+;ramp-signal-4 = 
+
+ramp-signal-0 =
+ramp-signal-1 =
+ramp-signal-2 =
+ramp-signal-3 =
+ramp-signal-4 =
 ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
@@ -248,7 +270,7 @@ date =
 date-alt = " %Y-%m-%d"
 
 time = %I:%M
-time-alt = %I:%M:%S
+time-alt =
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
@@ -300,20 +322,25 @@ format-charging-underline = #00000000
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = " "
+;format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-0 =
+ramp-capacity-1 =
+ramp-capacity-2 =
+ramp-capacity-3 =
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+format-full = <label-full>
+label-full =
+
+animation-charging-0 =
+animation-charging-1 =
+animation-charging-2 =
+animation-charging-3 =
 animation-charging-foreground = ${colors.foreground-alt}
-animation-charging-framerate = 750
+animation-charging-framerate = 500
 
 [module/temperature]
 type = internal/temperature
@@ -339,9 +366,11 @@ type = custom/menu
 
 format-spacing = 1
 
-label-open = 
+;label-open = 
+label-open = power
 label-open-foreground = ${colors.secondary}
-label-close =  cancel
+;label-close =  cancel
+label-close = close
 label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
