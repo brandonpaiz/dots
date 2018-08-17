@@ -8,6 +8,7 @@ set incsearch                       " search before pressing enter
 set scrolloff=3                     " keep 3 lines when scrolling
 
 set autoindent
+set breakindent
 set tabstop=4
 set shiftwidth=4
 set smartindent
