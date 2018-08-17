@@ -11,7 +11,8 @@ super + 4
 	thunar
 
 super + space
-	dmenu_run -fn Nu -p ">_ " -nb '#2f343f' -sb '#dee5ef' -sf '#2f343f' -q
+	dmenu_run -fn Nu -nb '#2f343f' -sb '#dee5ef' -sf '#2f343f' -q -dim 0.4 -h 27 -o 0.75 -x 433 -y 370 -w 500 -nb '#000000'
+
 
 super + w
 	bspc node -c
@@ -24,6 +25,9 @@ super + w
 
 {F1,F2}
 	xbacklight {-dec 10,-inc 10}
+
+super + alt + l
+	slock
 
 #
 # BSPWM
@@ -38,6 +42,9 @@ super + alt + Escape
 # move floating window
 super + {West,South,North,East}
 	bspc node -v {-20 0, 0 20, 0 -20, 20 0}
+
+super + {h,j,k,l}
+	bspc node --focus {west,south,north,east}
 
 # set window state
 super + {a,s,d}
@@ -55,3 +62,4 @@ super + {o,i}
 
 alt + Tab
 	bspc node -f last
+
