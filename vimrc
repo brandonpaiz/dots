@@ -1,7 +1,20 @@
+" Vundle Stuff
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'easymotion/vim-easymotion'
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 set number                          " line numbers
 set linebreak                       " visually wrap lines a bit nicer...
 set nowrap                          " ...not that I usually wrap
-set mouse=a                         " forgive me
+set display+=lastline               " get rid of those @s
+set mouse=a                         " its useful sometimes, okay!?
 set splitright                      " split to the right by default
 set updatetime=250                  " git gutter update time
 set incsearch                       " search before pressing enter
@@ -35,6 +48,8 @@ inoremap kk <ESC>
 " visual hjkl
 nnoremap j gj
 nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 " G now centers last line
 nnoremap G Gzz
@@ -127,6 +142,7 @@ inoremap log<TAB> console.log();<LEFT><LEFT>
 
 inoremap <C-A> <ESC>A
 inoremap <C-O> <ESC>o
+nnoremap <C-X> 1z=
 
 " set foldmethod=marker   " was good for latex tho
 " set foldmethod=indent   " remove when interview is done

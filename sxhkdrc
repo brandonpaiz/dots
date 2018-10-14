@@ -13,6 +13,8 @@ super + 4
 super + space
 	dmenu_run -fn Nu -nb '#2f343f' -sb '#dee5ef' -sf '#2f343f' -q -dim 0.4 -h 27 -o 0.75 -x 433 -y 370 -w 500 -nb '#000000'
 
+super + r
+	rofi
 
 super + w
 	bspc node -c
