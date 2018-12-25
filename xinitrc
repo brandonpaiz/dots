@@ -1,7 +1,8 @@
 xrdb load /home/brandon/.themes/bspwm/Xresources
+xset r rate 250 30 &
 xsetroot -cursor_name left_ptr &
 sxhkd -c /home/brandon/.themes/bspwm/sxhkdrc &
-hsetroot -fill ~/Downloads/dark_leaf.jpeg
+hsetroot -fill $WALLPAPER
 compton --conf ~/.themes/bspwm/compton.conf &
 polybar -c ~/.polybar_config example > /dev/null 2>&1 &
 xflux -z 90042 > /dev/null 2>&1 &

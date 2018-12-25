@@ -1,5 +1,8 @@
+#super + 1
+#	urxvt
+
 super + 1
-	urxvt
+	termite
 
 super + 2
 	firefox

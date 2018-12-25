@@ -65,7 +65,7 @@ inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")
 
 " Save with CTRL-E
 nnoremap <C-E> :w<ENTER>
-inoremap <C-E> <Esc>:w<ENTER>i
+inoremap <C-E> <Esc>:w<ENTER>a
 
 " Tab Autocomplete
 function! Tab_Or_Complete()
@@ -143,6 +143,7 @@ inoremap log<TAB> console.log();<LEFT><LEFT>
 inoremap <C-A> <ESC>A
 inoremap <C-O> <ESC>o
 nnoremap <C-X> 1z=
+nnoremap <C-P> :set spell!<CR>
 
 " set foldmethod=marker   " was good for latex tho
 " set foldmethod=indent   " remove when interview is done
