@@ -1,0 +1,28 @@
+#!/bin/bash
+
+bspc config window_gap   8
+bspc config border_width 4
+
+#bspc config top_padding 16
+
+bspc config active_border_color  "#00FFFFFF"
+bspc config normal_border_color  "#00FFFFFF"
+bspc config focused_border_color "#00FFFFFF"
+
+bspc config pointer_modifier super
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_size
+bspc config pointer_action3 resize_corner
+
+bspc config focus_follows_pointer true
+
+# run xrandr if external monitor attached
+# must be done before polybar started
+if xrandr --query | grep "HDMI1 connected"; then
+	xrandr --output LVDS1 --primary --mode 1366x768 --rotate normal --output HDMI1 --mode 1920x1080 --rotate normal --left-of LVDS1
+	bspc monitor HDMI1 -d 5 6 7 8
+	polybar -c ~/.polybar_config2 example > /dev/null 2>&1 &
+	feh --bg-scale $WALLPAPER
+fi
+
+bspc monitor LVDS1 -d 1 2 3 4

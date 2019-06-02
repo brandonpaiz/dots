@@ -57,7 +57,7 @@ super + {a,s,d}
 
 # switch workspaces
 super + bracket{left,right}
-	bspc desktop -f {prev,next}
+	bspc desktop -f {prev,next}.local
 
 # focus older/newer window
 super + {o,i}
