@@ -18,6 +18,7 @@ bspc config focus_follows_pointer true
 
 # run xrandr if external monitor attached
 # must be done before polybar started
+# might want to enumerate all monitors in the future: https://github.com/polybar/polybar/issues/763
 if xrandr --query | grep "HDMI1 connected"; then
 	xrandr --output LVDS1 --primary --mode 1366x768 --rotate normal --output HDMI1 --mode 1920x1080 --rotate normal --left-of LVDS1
 	bspc monitor HDMI1 -d 5 6 7 8
@@ -25,4 +26,5 @@ if xrandr --query | grep "HDMI1 connected"; then
 	feh --bg-scale $WALLPAPER
 fi
 
+polybar -c ~/.polybar_config example > /dev/null 2>&1 &
 bspc monitor LVDS1 -d 1 2 3 4
