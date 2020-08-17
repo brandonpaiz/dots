@@ -16,5 +16,39 @@ bspc config pointer_action3 resize_corner
 
 bspc config focus_follows_pointer true
 
-bspc monitor -d 1 2 3 4
+# discover monitors
+connectedOutputs=$(xrandr | grep " connected" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/")
+
+wallpaper_command="feh --bg-fill"
+i=0
+
+for display in $connectedOutputs
+do
+	if [ $i -eq 0 ]
+	then
+		xrandr --output $display --auto
+		LAST=$display
+	else
+		xrandr --output $display --auto --right-of $LAST
+		LAST=$display
+	fi
+	sleep .1 # I think it needs time to update. remove line to see what bs happens
+
+	# set up desktops on given monitor
+	min=$(( $i * 4 ))
+	max=$(( $i * 4 + 3 ))
+	bspc monitor $display -d $(seq $min $max)
+
+	# set up polybar on given monitor
+    MONITOR=$display polybar --reload -c ~/.polybar_config2 example &
+    #MONITOR=$display polybar --reload -c ~/.config/polybar/config.ini main &
+
+	# build wallpaper command
+	wallpaper_command="$wallpaper_command $WALLPAPER"
+
+	i=$(( $i + 1 ))
+done
+
+# set wallpapers
+$wallpaper_command
 
