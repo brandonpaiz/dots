@@ -8,6 +8,10 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'flazz/vim-colorschemes'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -25,6 +29,7 @@ set autoindent
 set breakindent
 set tabstop=4
 set shiftwidth=4
+set expandtab
 set smartindent
 set noruler                         " eh, never really need it
 
@@ -57,12 +62,6 @@ nnoremap G Gzz
 
 " ;; for ::
 inoremap ;; ::
-
-" Auto-close curly brackets and quotes.
-inoremap {<ENTER> {<CR>}<Esc>ko
-inoremap (  ()<Left>
-inoremap <expr> "  strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"\"<LEFT>"
-inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
 
 " Save with CTRL-E
 nnoremap <C-E> :w<ENTER>
@@ -145,6 +144,8 @@ inoremap <C-A> <ESC>A
 inoremap <C-O> <ESC>o
 nnoremap <C-X> 1z=
 nnoremap <C-P> :set spell!<CR>
+
+highlight! link SignColumn LineNr
 
 " set foldmethod=marker   " was good for latex tho
 " set foldmethod=indent   " remove when interview is done
