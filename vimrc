@@ -12,8 +12,12 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'djoshea/vim-autoread'
+Plugin 'junegunn/goyo.vim'
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+colorscheme OceanicNext
 
 set number                          " line numbers
 set linebreak                       " visually wrap lines a bit nicer...
