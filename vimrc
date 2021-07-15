@@ -14,6 +14,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'djoshea/vim-autoread'
 Plugin 'junegunn/goyo.vim'
+Plugin 'tpope/vim-sleuth'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
@@ -142,12 +143,27 @@ nnoremap <C-A> <C-W>=
 "CTRL-D: Maximize Split Width
 nnoremap <C-D> <C-W>\|
 
-inoremap log<TAB> console.log();<LEFT><LEFT>
-
 inoremap <C-A> <ESC>A
 inoremap <C-O> <ESC>o
+
+" Show/hide invisibles
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+function! ToggleInvisibles()
+  set list!
+endfunction
+:map <Leader>i :call ToggleInvisibles()<CR>
+
+" Toggle Goyo
+:map <Leader>g :Goyo<CR>
+
+" Toggle spell check
+map <Leader>s :set spell!<CR>
+
+" Toggle paste
+map <Leader>p :set paste!<CR>
+
+" CTRL-X to best-guess spelling correction
 nnoremap <C-X> 1z=
-nnoremap <C-P> :set spell!<CR>
 
 highlight! link SignColumn LineNr
 
