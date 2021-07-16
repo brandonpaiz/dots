@@ -1,14 +1,13 @@
 #!/bin/bash
 
 #BUG: cannot search for multi-word. ex: ./notehash-ls "Watch List"
-#TODO: A valid sec-def with invalid search fails ungracefully
-#TODO: also accept input from file?
+#FEAT: also accept input from file?
 #TODO: for some reason, text=$(cat) doesn't seem to store new lines at the end
 #      of the file. So if you're getting the last section AND applying offsets,
 #      it could cut off the bottom
 
 print_usage() {
-    echo "Usage: spangrabber [section definition regex] [selected section regex] [begin-offset] [end-offset]"
+    echo "Usage: ,spangrabber [section definition regex] [selected section regex] [begin-offset] [end-offset]"
 }
 
 # exit if not piped input https://unix.stackexchange.com/a/388462
@@ -49,11 +48,15 @@ fi
 
 # If multiple matches, section to print is ambiguous. Filter by section regex
 # and exit
-
-matched_sections=$(echo "$sections" | grep -ie "$sel_sec_reg" | wc -l)
-if [ $matched_sections -gt 1 ]; then
+num_matched_sections=$(echo "$sections" | grep -ie "$sel_sec_reg" | wc -l)
+if [ $num_matched_sections -gt 1 ]; then
     sections=$(echo "$text" | grep -e "$sec_def_reg" | grep -ie "$sel_sec_reg")
     echo "$sections"
+    exit 1
+fi
+
+# Exit if zero matches
+if [ $num_matched_sections -lt 1 ]; then
     exit 1
 fi
 
@@ -68,16 +71,13 @@ ln_start=$(echo "$sections" | head -n $selected_section_element | tail -n1 | cut
 ln_end=$(expr $(echo "$sections" | head -n $next_section_element | tail -n1 | cut -f1 -d:) - 1)
 
 # If finding last section, choose last line as ln_end
-if [ $ln_end -le $ln_start ]; then 
+if [ $ln_end -le $ln_start ]; then
   ln_end=$(echo "$text" | wc -l)
 fi
 
 # adjust start and end line numbers if user specified --begin-offset or --end-offset
-# TODO
 ln_start=$(bc <<< "$begin_offset + $ln_start")
 ln_end=$(bc <<< "$end_offset + $ln_end")
-#echo $ln_start
-#echo $ln_end
 
 
 # print just the section span. https://stackoverflow.com/a/83347
