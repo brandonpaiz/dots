@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#BUG: cannot search for multi-word. ex: ./notehash-ls "Watch List"
 #FEAT: also accept input from file?
 #TODO: for some reason, text=$(cat) doesn't seem to store new lines at the end
 #      of the file. So if you're getting the last section AND applying offsets,
@@ -10,12 +9,14 @@ print_usage() {
     echo "Usage: ,spangrabber [section definition regex] [selected section regex] [begin-offset] [end-offset]"
 }
 
-# exit if not piped input https://unix.stackexchange.com/a/388462
+#-------------------------------------------------------------------------------
+# Exit if not piped input https://unix.stackexchange.com/a/388462
 if [ -t 0  ]; then
     print_usage
     exit 1
 fi
 
+#-------------------------------------------------------------------------------
 # Process command line args
 sec_def_reg=$1
 sel_sec_reg=$2
@@ -30,7 +31,7 @@ if [ -z $end_offset ]; then
    end_offset=0
 fi
 
-
+#-------------------------------------------------------------------------------
 # Store piped input stackoverflow.com/a/32365596
 text="$(cat)"
 
@@ -75,11 +76,11 @@ if [ $ln_end -le $ln_start ]; then
   ln_end=$(echo "$text" | wc -l)
 fi
 
-# adjust start and end line numbers if user specified --begin-offset or --end-offset
+# Adjust start and end line numbers if user specified --begin-offset or --end-offset
 ln_start=$(bc <<< "$begin_offset + $ln_start")
 ln_end=$(bc <<< "$end_offset + $ln_end")
 
 
-# print just the section span. https://stackoverflow.com/a/83347
+# Print just the section span. https://stackoverflow.com/a/83347
 echo "$text" | sed -n "${ln_start},${ln_end}p;$(expr 1 + ${ln_end})q"
 
