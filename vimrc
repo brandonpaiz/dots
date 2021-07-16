@@ -1,22 +1,21 @@
-" Vundle Stuff
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" Autoinstall junegunn/vim-plug if needed
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'flazz/vim-colorschemes'
-Plugin 'djoshea/vim-autoread'
-Plugin 'junegunn/goyo.vim'
-Plugin 'tpope/vim-sleuth'
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#begin()
+Plug 'easymotion/vim-easymotion'
+Plug 'airblade/vim-gitgutter'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'flazz/vim-colorschemes'
+Plug 'djoshea/vim-autoread'
+Plug 'junegunn/goyo.vim'
+Plug 'tpope/vim-sleuth'
+call plug#end()
 
 colorscheme OceanicNext
 
