@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+NOTE_FILE_NAME="notes.txt"
+NOTE_FILE="$(pwd)/${NOTE_FILE_NAME}"
+
+# TODO: selection regex doesn't work with aprostrophies in title: e.g.: Brandon's List
+#                    v
+SECTION_REGEX='^\(\(\w\+\) \)\+\ * (\#[a-fA-F0-9]\{6\})$'
+

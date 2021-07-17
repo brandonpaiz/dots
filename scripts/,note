@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+NOTE_SCRIPTS_DIR=$(dirname $0)/note-scripts  # Find supporting scripts
+source $NOTE_SCRIPTS_DIR/note-globals        # Import global variables
+
+script=note-$1                               # The script to run (note-ls, etc)
+cmd=$NOTE_SCRIPTS_DIR/$script                # The full command
+
+# If no input, display help
+if [ -z "$1" ]; then
+    printf "Usage: ,note <command> [<args>]\n\n"
+    printf "Commands:\n"
+    printf "   help \t (coming soon) List availible subcommands and in depth explanations\n"
+    printf "   ls   \t List and search sections in note file\n"
+    exit 1
+fi
+
+# Check that the script exists
+if [ ! -f "$cmd" ]; then
+    echo note: \'"$1"\' is not a known command.
+    exit 1
+fi
+
+shift        # Pass on other args to called script
+source $cmd  # Run the command here so it can access imported global variables
+status=$?    # Exit status is exit status of command
+exit $status
+

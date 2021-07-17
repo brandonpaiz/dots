@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ ! -f $NOTE_FILE ]; then
+    echo "Could not find ./${NOTE_FILE_NAME}."
+    exit 1
+fi
+
+if [ -z "$1" ]; then
+    cat $NOTE_FILE | ,spangrabber "${SECTION_REGEX}"
+else
+    cat $NOTE_FILE | ,spangrabber "${SECTION_REGEX}" "$1" -1 -1
+fi
+
