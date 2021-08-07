@@ -8,7 +8,7 @@ endif
 call plug#begin()
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
-Plug 'jiangmiao/auto-pairs'
+Plug 'rstacruz/vim-closer'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'flazz/vim-colorschemes'
