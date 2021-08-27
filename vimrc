@@ -17,8 +17,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-sleuth'
 call plug#end()
 
-colorscheme OceanicNext
-
 set number                          " line numbers
 set linebreak                       " visually wrap lines a bit nicer...
 set nowrap                          " ...not that I usually wrap
@@ -169,3 +167,5 @@ highlight! link SignColumn LineNr
 " set foldmethod=marker   " was good for latex tho
 " set foldmethod=indent   " remove when interview is done
 " set foldnestmax=1
+
+colorscheme OceanicNext
