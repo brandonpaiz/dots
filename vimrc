@@ -165,6 +165,9 @@ map <Leader>w :set wrap!<CR>
 " CTRL-X to best-guess spelling correction
 nnoremap <C-X> 1z=
 
+# Jump to next notes section
+map <Leader>n /-\{80\}<CR>
+
 highlight! link SignColumn LineNr
 
 " set foldmethod=marker   " was good for latex tho
