@@ -159,6 +159,9 @@ map <Leader>s :set spell!<CR>
 " Toggle paste
 map <Leader>p :set paste!<CR>
 
+" Toggle wrap
+map <Leader>w :set wrap!<CR>
+
 " CTRL-X to best-guess spelling correction
 nnoremap <C-X> 1z=
 
