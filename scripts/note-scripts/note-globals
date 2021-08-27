@@ -3,7 +3,5 @@
 NOTE_FILE_NAME="notes.txt"
 NOTE_FILE="$(pwd)/${NOTE_FILE_NAME}"
 
-# TODO: selection regex doesn't work with aprostrophies in title: e.g.: Brandon's List
-#                    v
-SECTION_REGEX='^\(\(\w\+\) \)\+\ * (\#[a-fA-F0-9]\{6\})$'
+SECTION_REGEX='^\(\(.\+\) \)\+\ * (\#[a-fA-F0-9]\{6\})$'
 
