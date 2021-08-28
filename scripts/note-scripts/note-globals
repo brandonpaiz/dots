@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+EDITOR=vim
 NOTE_FILE_NAME="notes.txt"
 NOTE_FILE="$(pwd)/${NOTE_FILE_NAME}"
 
