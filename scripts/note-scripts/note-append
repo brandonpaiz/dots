@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Append a note to the note file
+# The first line of the note will be converted to include the hash
+
+if [ ! -f $NOTE_FILE ]; then
+    echo "Could not find ./${NOTE_FILE_NAME}."
+    exit 1
+fi
+
+temp_note_file=$(mktemp)
+temp_formatted_file=$(mktemp)
+
+# Editor set in note-globals (and later, .noteconfig)
+$EDITOR "$temp_note_file"
+echo $temp_note_file
+
+title=$(head -n1 $temp_note_file)
+
+# Insert header
+echo "" > $temp_formatted_file
+echo -------------------------------------------------------------------------------- >> $temp_formatted_file
+,note hash "$title" >> $temp_formatted_file
+
+# Insert rest of note
+lines=$(($(wc -l $temp_note_file | tr -s " " | cut -f 2 -d ' ')-1))
+rest=$(tail -n${lines} $temp_note_file)
+echo "$rest" >> $temp_formatted_file
+
+# Append to note file
+cat $temp_formatted_file >> $NOTE_FILE
