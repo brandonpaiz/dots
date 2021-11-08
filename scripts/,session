@@ -16,6 +16,8 @@ working_dir=~/.sessions/${session_name}
 git clone git@github.com:brandonpaiz/${git_repo}.git $working_dir
 
 pushd $working_dir
+git remote add upstream https://github.com/grpc/${git_repo}.git
+
 tmux new-session -d -s ${session_name} # create tmux session without attaching to it
 
 tmux switch -t ${session_name} || tmux attach -t ${session_name}
