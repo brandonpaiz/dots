@@ -15,7 +15,17 @@ Plug 'flazz/vim-colorschemes'
 Plug 'djoshea/vim-autoread'
 Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-sleuth'
+Plug 'fatih/vim-go'
+Plug 'vim-syntastic/syntastic'
 call plug#end()
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_auto_jump = 0
+let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+let g:syntastic_python_checkers = ['pylint']
 
 set number                          " line numbers
 set linebreak                       " visually wrap lines a bit nicer...
