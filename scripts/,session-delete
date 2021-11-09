@@ -13,8 +13,8 @@ session_name=$1
 # Move directory to trash
 num_words_in_session_name=$(echo ${session_name} | wc -w)
 if [ "${num_words_in_session_name}" -eq "1" ]; then
-  mkdir ~/.sessions/trash
-  mv -r ~/.sessions/${session_name} ~/.sessions/trash
+  mkdir ~/.sessions/trash 2> /dev/null
+  mv ~/.sessions/${session_name} ~/.sessions/trash 2> /dev/null || echo "Directory \"~/.sessions/${session_name}\" not found"
 else
   echo "Session name should be a single word"
   echo Usage: $0 session_name
@@ -22,5 +22,5 @@ else
 fi
 
 # Remove tmux session
-tmux kill-session -t "${session_name}"
+tmux kill-session -t "${session_name}" 2> /dev/null || echo "Tmux session ${session_name} not found"
 
