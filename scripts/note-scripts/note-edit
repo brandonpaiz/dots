@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ ! -f $NOTE_FILE ]; then
+    echo "Could not find ./${NOTE_FILE_NAME}."
+    exit 1
+fi
+
+if [ -z "$EDITOR" ]; then
+    echo '$EDITOR not set'
+    exit 1
+fi
+
+"$EDITOR" "$NOTE_FILE"
