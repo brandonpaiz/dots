@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sleep_error_msg() {
+  echo "$0: invalid time interval '$1'"
+}
+
+sleep_time="$1"
+regex="$2"
+shift 2
+
+while true
+do
+  "$@" 2>&1 | tee /dev/tty | grep "$regex" &>/dev/null || exit 0
+  sleep "$sleep_time" &>/dev/null || { sleep_error_msg "$@" && exit 1; }
+done

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+sleep_error_msg() {
+  echo "$0: invalid time interval '$1'"
+}
+
+sleep_time="$1"
+shift 1
+while true
+do
+  "$@"
+  sleep "$sleep_time" &>/dev/null || { sleep_error_msg "$@" && exit 1; }
+done
