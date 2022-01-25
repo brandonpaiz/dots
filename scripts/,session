@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # TODO: add comments
+# TODO: add ,sessions script which should list all active session names
+# TODO: make this script use ,sessions to check that session does not already exist
+# TODO: make ,session-delete ,sessions before delete
 
 if [ -z $2 ]; then
   echo Usage: $0 git_repo session_name
