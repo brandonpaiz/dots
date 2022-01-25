@@ -35,16 +35,14 @@ macros=(
     'date   #af0ec4 ^\d\{4\}'
 )
 for macro in "${macros[@]}"; do
-    macro_name=$(cut -d ' ' -f 1 <<< $macro)
-
+    macro_name=$(tr -s ' ' <<< "$macro" | cut -d ' ' -f 1)
     if [ "$macro_name" = "$target_macro" ]; then
-        macro_section=$(cut -d ' ' -f 2 <<< $macro)
-        macro_subsection_regex=$(cut -d ' ' -f 3 <<< $macro)
+        macro_section=$(tr -s ' ' <<< "$macro" | cut -d ' ' -f 2)
+        macro_subsection_regex=$(tr -s ' ' <<< "$macro" | cut -d ' ' -f 3)
         source $NOTE_SCRIPTS_DIR/note-ls "$macro_section" | ,spangrabber "$macro_subsection_regex" "$search_string"
         status=$?
         exit $status
     fi
-
 done
 
 
