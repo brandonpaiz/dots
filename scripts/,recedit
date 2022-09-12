@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# TODO: make it so that each input argument is a different search
+#       at the moment, to open multiple different files you'd have to do
+#       seomthing like `,recedit "foo\|bar". I want to be able to do something
+#       more like `,recedit foo bar`.
+# TODO: Open with $EDITOR.
+# TODO: Don't open $EDITOR if no matching files are found.
+
+FOUND_FILES=$(find . -type f | grep "$1")
+FILE_COUNT=$(echo "$FOUND_FILES" | wc -l)
+MAX_FILES=10
+
+if [ "$FILE_COUNT" -gt "$MAX_FILES" ]; then
+  echo Too many to edit: "$FILE_COUNT". Max set at "$MAX_FILES"
+  exit
+fi
+
+FOUND_FILES=$(echo "$FOUND_FILES" | tr '\n' ' ')
+echo "$FOUND_FILES"
+
+vim -p $FOUND_FILES
+

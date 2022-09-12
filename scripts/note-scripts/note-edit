@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+NOTE_FILE="${NOTE_FILE/#\~/$HOME}"
+
 if [ ! -f $NOTE_FILE ]; then
-    echo "Could not find ./${NOTE_FILE_NAME}."
+    echo "Could not find ${NOTE_FILE}."
     exit 1
 fi
 

@@ -3,6 +3,7 @@
 EDITOR=vim
 NOTE_FILE_NAME="notes.txt"
 NOTE_FILE="$(pwd)/${NOTE_FILE_NAME}"
+NOTE_FILE="~/work/notes.txt"
 
 SECTION_REGEX='^\(\(.\+\) \)\+\ * (\#[a-fA-F0-9]\{6\})$'
 

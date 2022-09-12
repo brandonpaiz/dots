@@ -1,0 +1,58 @@
+diff --git a/scripts/,note b/scripts/,note
+index 473f024..80f746f 100755
+--- a/scripts/,note
++++ b/scripts/,note
+@@ -10,19 +10,43 @@ cmd=$NOTE_SCRIPTS_DIR/$script                # The full command
+ if [ -z "$1" ]; then
+     printf "Usage: ,note <command> [<args>]\n\n"
+     printf "Commands:\n"
+-    printf "   help \t (coming soon) List availible subcommands and in depth explanations\n"
+-    printf "   ls   \t List and search sections in note file\n"
++    printf "   help   \t (coming soon) List availible subcommands and in depth explanations\n"
++    printf "   ls     \t List and search sections in note file\n"
++    printf "   append \t Append new formatted note to note file\n"
+     exit 1
+ fi
+ 
+-# Check that the script exists
+-if [ ! -f "$cmd" ]; then
+-    echo note: \'"$1"\' is not a known command.
+-    exit 1
++# Run script if it exists
++if [ -f "$cmd" ]; then
++    shift        # Pass on other args to called script
++    source $cmd  # Run the command here so it can access imported global variables
++    status=$?    # Exit status is exit status of command
++    exit $status
+ fi
+ 
+-shift        # Pass on other args to called script
+-source $cmd  # Run the command here so it can access imported global variables
+-status=$?    # Exit status is exit status of command
+-exit $status
++# Check mappings
++
++target_macro=$1
++search_string=$2
++declare -a macros
++macros=(
++    'people #78386e ^\w'
++    'todo   #0a386d ^\w'
++    'date   #af0ec4 ^\d\{4\}'
++)
++for macro in "${macros[@]}"; do
++    macro_name=$(cut -d ' ' -f 1 <<< $macro)
++
++    if [ "$macro_name" = "$target_macro" ]; then
++        macro_section=$(cut -d ' ' -f 2 <<< $macro)
++        macro_subsection_regex=$(cut -d ' ' -f 3 <<< $macro)
++        source $NOTE_SCRIPTS_DIR/note-ls "$macro_section" | ,spangrabber "$macro_subsection_regex" "$search_string"
++        status=$?
++        exit $status
++    fi
++
++done
++
+ 
++echo "Could not find command or macro \"$1\""
++exit 1

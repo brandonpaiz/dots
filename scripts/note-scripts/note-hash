@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# TODO: on some systems, the md5 command is `md5sum`. Make the script try both
+# options and give up if neither can be found.
+
 # Command line argument passed. Parse just one line
 if [ ! -z "$1" ]; then
     line=$*
