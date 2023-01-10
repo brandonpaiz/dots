@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#TODO: allow overrides in ~/.noteconfig
+
 EDITOR=vim
 NOTE_FILE_NAME="notes.txt"
 NOTE_FILE="$(pwd)/${NOTE_FILE_NAME}"
