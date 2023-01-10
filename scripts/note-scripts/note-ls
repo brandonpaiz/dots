@@ -5,9 +5,17 @@ if [ ! -f $NOTE_FILE ]; then
     exit 1
 fi
 
+# no arg given; print all section headers
 if [ -z "$1" ]; then
     cat $NOTE_FILE | ,spangrabber "${SECTION_REGEX}"
-else
-    cat $NOTE_FILE | ,spangrabber "${SECTION_REGEX}" "$1" -1 -1
+    exit 0
 fi
+
+section_begin_offset='-1'
+section_end_offset='-1'
+if [[ $* == *--no-section-header* ]]; then
+  section_begin_offset='2'
+fi
+
+cat $NOTE_FILE | ,spangrabber "${SECTION_REGEX}" "$1" "$section_begin_offset" "$section_end_offset"
 
