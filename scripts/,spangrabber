@@ -4,6 +4,8 @@
 #TODO: for some reason, text=$(cat) doesn't seem to store new lines at the end
 #      of the file. So if you're getting the last section AND applying offsets,
 #      it could cut off the bottom
+#TODO: When picking between two spans, if one span is a subset of another, that
+#      span can not be selected. Exact matches should show the span
 
 print_usage() {
     echo "Usage: ,spangrabber [section definition regex] [selected section regex] [begin-offset] [end-offset]"
