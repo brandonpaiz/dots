@@ -6,7 +6,7 @@ if [ ! -z "$1" ]; then
     line_length=${#line}
     hash_length=9 # example: (#345678)
     padding=$(expr 80 - $line_length)
-    md5hash=$(echo \(\#$(echo -n "$line" | md5 | cut -b 1-6)\))
+    md5hash=$(echo \(\#$(echo -n "$line" | md5sum | cut -b 1-6)\))
     printf '%s%*s\n' "$line" $padding $md5hash
     exit 0
 fi
@@ -17,6 +17,6 @@ do
     line_length=${#line}
     hash_length=9 # example: (#345678)
     padding=$(expr 80 - $line_length)
-    md5hash=$(echo \(\#$(echo -n "$line" | md5 | cut -b 1-6)\))
+    md5hash=$(echo \(\#$(echo -n "$line" | md5sum | cut -b 1-6)\))
     printf '%s%*s\n' "$line" $padding $md5hash
 done
