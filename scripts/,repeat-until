@@ -1,8 +1,18 @@
 #!/bin/bash
 
-sleep_error_msg() {
-  echo "$0: invalid time interval '$1'"
+usage(){
+  echo "usage: $(basename $0) <repeat_every> <regex> command..."
+  echo "example: $(basename $0) 1 '01:01.*AM UTC' 'date'"
 }
+
+sleep_error_msg() {
+  echo "$(basename $0): invalid time interval '$1'"
+}
+
+if [[ ! $# -eq 3 ]]; then
+  usage
+  exit 1
+fi
 
 sleep_time="$1"
 regex="$2"
@@ -10,6 +20,6 @@ shift 2
 
 while true
 do
-  "$@" 2>&1 | tee /dev/tty | grep "$regex" &>/dev/null && exit 0
+  eval "$@" 2>&1 | tee /dev/tty | grep -E "$regex" &>/dev/null && exit 0
   sleep "$sleep_time" &>/dev/null || { sleep_error_msg "$@" && exit 1; }
 done
