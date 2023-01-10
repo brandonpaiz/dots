@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# This will echo some unique-ish value.
+# iTerm is configured to make a sound when it sees this value.
+# Example usage: long-process && ,done
+
+echo "6b2ded51d81a4403d8a4bd25fa1e57ee:done"
