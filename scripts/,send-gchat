@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# TODO: at the moment, this script only accepts piped input. Also allow
+# ,send-gchat <message>
+
+# Click on the channel name then "Manage webhooks" for the webhook URL
+webhook="add webhook url here"
+
+all_lines=""
+while read line
+do
+    if [ -z "$all_lines" ]; then
+        all_lines=$line
+    else
+        all_lines=$all_lines"\n"$line
+    fi
+done < "${1:-/dev/stdin}"
+
+curl --request POST \
+  -H 'Content-Type: application/json; charset=UTF-8' \
+  --data "{'text': \"$all_lines\"}" \
+  "$webhook"
