@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+# note-run reads from recutils DB defined by SCRIPT_SECTION
+# DB holds sections of scripts that can be
+# 1. Copied to a file
+# 2. Chmod +x on that file
+# 3. Run that file as an executable
+#
+# Example note file where this would work:
+# -------------------------------------------------------------------------------
+# Script database                                                       (#aaaaaa)
+#
+# %rec: Script
+# %mandatory: ScriptName Description Section
+#
+# ScriptName: hello-world
+# Description: print hello world
+# Section: #bbbbbb
+#
+# -------------------------------------------------------------------------------
+# Script: hello-world                                                   (#bbbbbb)
+#
+# #!/bin/bash
+# echo "hello, world!"
+#
+# You'd then define SCRIPT_SECTION="#aaaaaa" below and could run the hello-world
+# script with `,note run hello-world`
+
+
+SCRIPT_SECTION="#b4fc2e"
+
+if [ ! -f $NOTE_FILE ]; then
+    echo "Could not find ./${NOTE_FILE_NAME}."
+    exit 1
+fi
+
+function script_rec_db_pretty_print() {
+  local db="$1"
+  local i=0
+
+  while true; do
+    record="$(echo "$db" | recsel -n "$i")"
+    if [ -z "$record" ]; then
+      break
+    fi
+
+    script_name=$(grep "ScriptName" <<< "$record" | awk '{print $2}')
+    script_desc=$(grep "Description" <<< "$record" | cut -d' ' -f1)
+    script_desc=$(grep "Description" <<< "$record" | cut -d' ' -f 2-)
+    script_section=$(grep "Section" <<< "$record" | awk '{print $2}')
+
+    echo "($script_section) $script_name: $script_desc"
+    ((i=i+1))
+  done
+
+}
+
+scripts_db=$(,note db $SCRIPT_SECTION)
+
+if [ ! $? -eq 0 ]; then
+  echo "$scripts_db"
+  exit 1
+fi
+
+# If no script specified list all scripts
+if [ -z "$1" ]; then
+    #echo "$scripts_db"
+    script_rec_db_pretty_print "$scripts_db"
+    exit 0
+fi
+
+SCRIPT_FILE=/tmp/note-script-run
+
+search=$(echo "ScriptName ~ '${1}'")
+search_results=$(echo "$scripts_db" | recsel -e "$search")
+
+if [ "$(grep "ScriptName" <<< "$search_results" | wc -l )" != "1" ]; then
+    if [ -z "$search_results" ]; then
+        echo "no scripts found"
+    else
+        script_rec_db_pretty_print "$search_results"
+    fi
+    exit 0
+fi
+
+script_name=$(grep "ScriptName" <<< "$search_results" | awk '{print $2}')
+section=$(grep "Section" <<< "$search_results" | awk '{print $2}')
+echo running script $script_name from $section
+
+,note ls "$section" --no-section-header > "$SCRIPT_FILE"
+chmod +x "$SCRIPT_FILE"
+"$SCRIPT_FILE" "${@:2}"
+exit $?
