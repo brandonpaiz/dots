@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Process a section as a recutils database
+# Some attempt is made to verify that the section actually is a recutils DB
+#
+# It might be wise to make a recutils-DB section that is a recutils DB that
+# lists recutils DBs. Then, `,note db` would parse this section first and list
+# the DBs available for use.
+
+if [ ! -f $NOTE_FILE ]; then
+    echo "Could not find ./${NOTE_FILE_NAME}."
+    exit 1
+fi
+
+section_content=$(,note ls "$1" --no-section-header)
+
+echo "$section_content" | recfix
+if [ ! $? -eq 0 ]; then
+  # TODO: $1 might not specify a single section
+  echo "Note section $1 contained recutils error"
+  exit 1
+fi
+echo "$section_content" | recsel "${@:2}"
+
