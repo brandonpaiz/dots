@@ -1,0 +1,18 @@
+#!/bin/bash
+
+defn="$1"
+look="$2"
+
+if [ -z "$look" ]; then
+    awkInput=$(printf '/%s/ {print}' "$defn")
+    awk "$awkInput" - ; exit $?
+fi
+
+awkInput=$(printf '
+  /%s/ && /%s/           {state="FOUND"; print; next}
+  /%s/ && state=="FOUND" {exit 0}
+  /%s/                   {state="NFOUND"; next}
+  state=="FOUND"         {print}
+' "$defn" "$look" "$defn" "$defn" )
+
+awk "$awkInput" - ; exit $?
