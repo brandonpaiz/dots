@@ -1,18 +1,28 @@
 #!/bin/bash
 
-defn="$1"
-look="$2"
+# BUG: all matching sections are printed instead of listing sections
 
-if [ -z "$look" ]; then
-    awkInput=$(printf '/%s/ {print}' "$defn")
-    awk "$awkInput" - ; exit $?
+export defn="$1"
+export targ="$2"
+
+if [ -z "$targ" ]; then
+    script=$(envsubst <<< '/$defn/ {print}')
+    awk "$script" - ; exit $?
 fi
 
-awkInput=$(printf '
-  /%s/ && /%s/           {state="FOUND"; print; next}
-  /%s/ && state=="FOUND" {exit 0}
-  /%s/                   {state="NFOUND"; next}
-  state=="FOUND"         {print}
-' "$defn" "$look" "$defn" "$defn" )
+#input=$(cat)
+#
+#matches=$(awk "$(envsubst <<< '/$defn/ && /$targ/ {print}')" <<< $Input)
+#matchesCount=$(wc -l <<< matches)
+#if [ "$matchesCount" -gt 1 ]; then
+#  echo "$matches"
+#  exit 1
+#fi
 
-awk "$awkInput" - ; exit $?
+script=$(envsubst <<< '
+  /$defn/ && /$targ/        {state="FOUND"; print; next}
+  /$defn/ && state=="FOUND" {exit 0}
+  /$defn/                   {state="NFOUND"; next}
+  state=="FOUND"            {print}')
+
+awk "$script" - ; exit $?
