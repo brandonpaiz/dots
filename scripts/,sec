@@ -9,15 +9,16 @@ if [ -z "$targ" ]; then
 fi
 
 script=$(envsubst <<< '
-  /$defn/ && found==1             {end_section="true"}              # comment
-  found>0   && /$defn/ && /$targ/ {headers[++found]=$0; next}       # multiple sections found; just add header
-  found=="" && /$defn/ && /$targ/ {headers[++found]=$0}             #
-  found==1 && end_section!="true" {content[++contentNum]=$0; next}  #
+  /$defn/   && found==1            {end_section="true"}              # found section header
+  found>0   && /$defn/ && /$targ/  {headers[++found]=$0; next}       # non-first matching section found
+  found=="" && /$defn/ && /$targ/  {headers[++found]=$0}             # found first matching section
+  found==1  && end_section!="true" {content[++contentNum]=$0; next}  # store content of section
 
   END {
-    if(length(headers)>1) for (i=1; i <= length(headers); i++) print headers[i]
-    else                  for (i=1; i <= length(content); i++) print content[i]
+    if(length(headers)>1) { print_array(headers); exit 1 }           # more than one section found
+    else                  { print_array(content); exit 0 }           # one section found; print it
   }
+  function print_array(a) { for (i=1; i<=length(a); i++) print a[i] }
 ')
 
 awk "$script" - ; exit $?
