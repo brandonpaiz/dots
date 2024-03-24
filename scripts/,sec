@@ -1,22 +1,22 @@
 #!/bin/bash
 
-export defn="$1"
-export targ="$2"
+export defn="$1" # section definition
+export targ="$2" # section target
 
 if [ -z "$targ" ]; then
-    script=$(envsubst <<< '/$defn/ {print}')
+    script=$(envsubst <<< '/$defn/ {print}') # no target; just show section headers
     awk "$script" - ; exit $?
 fi
 
 script=$(envsubst <<< '
-  /$defn/   && found==1            {end_section="true"}              # found section header
-  found>0   && /$defn/ && /$targ/  {headers[++found]=$0; next}       # non-first matching section found
-  found=="" && /$defn/ && /$targ/  {headers[++found]=$0}             # found first matching section
-  found==1  && end_section!="true" {content[++contentNum]=$0; next}  # store content of section
+  /$defn/   && found==1           {sec_end="true"}                 # found section header
+  found>0   && /$defn/ && /$targ/ {headers[++found]=$0; next}      # non-first matching section found
+  found=="" && /$defn/ && /$targ/ {headers[++found]=$0}            # found first matching section
+  found==1  && sec_end!="true"    {content[++contentNum]=$0; next} # store content of section
 
   END {
-    if(length(headers)>1) { print_array(headers); exit 1 }           # more than one section found
-    else                  { print_array(content); exit 0 }           # one section found; print it
+    if(length(headers)>1) { print_array(headers); exit 1 }         # more than one section found
+    else                  { print_array(content); exit 0 }         # print only found section
   }
   function print_array(a) { for (i=1; i<=length(a); i++) print a[i] }
 ')
