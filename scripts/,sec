@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# BUG: all matching sections are printed instead of listing sections
-
 export defn="$1"
 export targ="$2"
 
@@ -10,19 +8,16 @@ if [ -z "$targ" ]; then
     awk "$script" - ; exit $?
 fi
 
-#input=$(cat)
-#
-#matches=$(awk "$(envsubst <<< '/$defn/ && /$targ/ {print}')" <<< $Input)
-#matchesCount=$(wc -l <<< matches)
-#if [ "$matchesCount" -gt 1 ]; then
-#  echo "$matches"
-#  exit 1
-#fi
-
 script=$(envsubst <<< '
-  /$defn/ && /$targ/        {state="FOUND"; print; next}
-  /$defn/ && state=="FOUND" {exit 0}
-  /$defn/                   {state="NFOUND"; next}
-  state=="FOUND"            {print}')
+  /$defn/ && found==1             {end_section="true"}              # comment
+  found>0   && /$defn/ && /$targ/ {headers[++found]=$0; next}       # multiple sections found; just add header
+  found=="" && /$defn/ && /$targ/ {headers[++found]=$0}             #
+  found==1 && end_section!="true" {content[++contentNum]=$0; next}  #
+
+  END {
+    if(length(headers)>1) for (i=1; i <= length(headers); i++) print headers[i]
+    else                  for (i=1; i <= length(content); i++) print content[i]
+  }
+')
 
 awk "$script" - ; exit $?
